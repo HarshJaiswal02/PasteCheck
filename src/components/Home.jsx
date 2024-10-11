@@ -1,12 +1,41 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { addToPastes, updateToPastes } from "../redux/pasteSlice";
 
 const Home = () => {
   const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const pasteId = searchParams.get("pasteId");
+
+  const createPaste = (e) => {
+    e.preventDefault();
+    const note = {
+      title: title,
+      content: content,
+      _id: pasteId || Date.now().toString(32),
+      createdAt: new Date().toISOString(),
+    };
+    console.log(note);
+    if (pasteId) {
+      // update
+      dispatch(updateToPastes(note));
+    } else {
+      //create
+      dispatch(addToPastes(note));
+    }
+
+    setTitle("");
+    setContent("");
+    setSearchParams({});
+  };
   return (
     <div className="min-h-screen flex justify-center">
       <div className="w-full max-w-lg">
         {/* Title Section */}
-        <form className="flex gap-1 items-center mb-8">
+        <form className="flex gap-1 items-center mb-8" onSubmit={createPaste}>
           <label htmlFor="simple-search" className="sr-only">
             Search
           </label>
@@ -68,6 +97,8 @@ const Home = () => {
               className="w-full  border-none align-top focus:ring-0 sm:text-sm p-4"
               rows="4"
               placeholder="Enter your notes here..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
             ></textarea>
 
             <div className="flex items-center justify-end gap-2 bg-white p-3">
@@ -79,6 +110,7 @@ const Home = () => {
               </button>
 
               <button
+                onClick={createPaste}
                 type="button"
                 className="rounded bg-slate-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700"
               >

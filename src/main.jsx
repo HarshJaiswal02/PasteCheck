@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar.jsx";
 import Home from "./components/Home.jsx";
 import Paste from "./components/Paste.jsx";
 import ViewPaste from "./components/ViewPaste.jsx";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -41,10 +42,11 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <RouterProvider router={router}>
         <App />
-      </Provider>
-    </RouterProvider>
+      </RouterProvider>
+      <Toaster />
+    </Provider>
   </StrictMode>
 );
