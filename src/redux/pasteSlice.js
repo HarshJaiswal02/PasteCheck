@@ -21,9 +21,37 @@ export const pasteSlice = createSlice({
       localStorage.setItem("pastes", JSON.stringify(state.pastes));
       toast.success("Paste created Successfully");
     },
-    updateToPastes: (state) => {},
-    resetAllPastes: (state, action) => {},
-    removeFromPastes: (state, action) => {},
+    updateToPastes: (state, action) => {
+      const note = action.payload;
+      const pastes = state.pastes;
+      const index = pastes.findIndex((data) => data._id === note._id);
+
+      if (index >= 0) {
+        state.pastes[index] = note;
+        localStorage.setItem("pastes", JSON.stringify(state.pastes));
+        toast.success("Note Updated Successfully");
+      } else {
+        console.log(index);
+        toast.error("Some error occurred while updating");
+      }
+    },
+    resetAllPastes: (state) => {
+      state.pastes = [];
+      localStorage.removeItem("pastes");
+    },
+    removeFromPastes: (state, action) => {
+      const note = action.payload;
+
+      const index = state.pastes.findIndex((data) => data._id === note._id);
+
+      if (index >= 0) {
+        state.pastes.splice(index, 1);
+        localStorage.setItem("pastes", JSON.stringify(state.pastes));
+        toast.success("Removed Successfully");
+      } else {
+        toast.error("Error while removing");
+      }
+    },
   },
 });
 

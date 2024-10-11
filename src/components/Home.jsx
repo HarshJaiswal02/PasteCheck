@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { addToPastes, updateToPastes } from "../redux/pasteSlice";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const [title, setTitle] = useState("");
@@ -12,6 +13,11 @@ const Home = () => {
 
   const createPaste = (e) => {
     e.preventDefault();
+    if (!title || !content) {
+      console.log("Title or content Missing");
+      toast.error("Title or Content Missing");
+      return;
+    }
     const note = {
       title: title,
       content: content,
@@ -105,6 +111,7 @@ const Home = () => {
               <button
                 type="button"
                 className="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600"
+                onClick={() => setContent("")}
               >
                 Clear
               </button>
