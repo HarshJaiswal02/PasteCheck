@@ -3,9 +3,10 @@ import React, { useState } from "react";
 const Home = () => {
   const [title, setTitle] = useState("");
   return (
-    <>
-      <div className="mt-4">
-        <form className="flex items-center max-w-sm mx-auto">
+    <div className="min-h-screen flex justify-center">
+      <div className="w-full max-w-lg">
+        {/* Title Section */}
+        <form className="flex gap-1 items-center mb-8">
           <label htmlFor="simple-search" className="sr-only">
             Search
           </label>
@@ -31,15 +32,14 @@ const Home = () => {
               type="text"
               id="simple-search"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Enter the title for paste"
+              placeholder="Enter the title of note"
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <button
-            type="submit"
-            className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className={`flex items-center px-2 py-2 text-white bg-slate-600 hover:bg-blue-700 rounded-lg`}
           >
             <svg
               className="w-6 h-6"
@@ -54,12 +54,41 @@ const Home = () => {
               <path d="M9 2H15C15.5523 2 16 2.44772 16 3V5C16 5.55228 15.5523 6 15 6H9C8.44772 6 8 5.55228 8 5V3C8 2.44772 8.44772 2 9 2Z" />
               <path d="M4 7C4 6.44772 4.44772 6 5 6H19C19.5523 6 20 6.44772 20 7V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V7Z" />
             </svg>
-
-            <span className="sr-only">Title</span>
           </button>
         </form>
+
+        {/* Notes Section */}
+        <div className="mt-1">
+          <label htmlFor="Notes" className="sr-only">
+            Notes
+          </label>
+          <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+            <textarea
+              id="OrderNotes"
+              className="w-full  border-none align-top focus:ring-0 sm:text-sm p-4"
+              rows="4"
+              placeholder="Enter your notes here..."
+            ></textarea>
+
+            <div className="flex items-center justify-end gap-2 bg-white p-3">
+              <button
+                type="button"
+                className="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600"
+              >
+                Clear
+              </button>
+
+              <button
+                type="button"
+                className="rounded bg-slate-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
